@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import SideMenu from "./sidemenu";
 import { TiThMenu } from "react-icons/ti";
 import useToggleBooleanState from "@/hooks/common/useToggleBooleanState";
+import { motion } from "framer-motion";
 
 interface Props {
   sideNavPosition?: string;

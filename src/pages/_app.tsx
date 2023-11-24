@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
+// import {ThemeProvider} from 'next-themes';
 
 //exported so the this type can also be reused in other pages
 export type NextPageWithLayout = NextPage & {

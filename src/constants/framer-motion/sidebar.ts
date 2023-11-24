@@ -1,8 +1,10 @@
+const hoverColor = "#303030";
+
 export const sideMenuVariants = {
   sizeIncrease: {
     scale: 1.1,
     originX: 0,
-    backgroundColor: "#303030",
+    backgroundColor: hoverColor,
     transition: {
       duration: 0.2,
     },
@@ -26,7 +28,7 @@ export const sideSubMenuVariants = {
   sizeIncrease: {
     scale: 1.1,
     originX: 0,
-    backgroundColor: "#303030",
+    backgroundColor: hoverColor,
     transition: {
       duration: 0.2,
     },
