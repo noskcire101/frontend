@@ -10,9 +10,10 @@ import {
 
 interface MenuItemsProps {
   item: IMenuItems;
+  handleClose: () => void;
 }
 
-function MenuItems({ item }: MenuItemsProps) {
+function MenuItems({ item, handleClose }: MenuItemsProps) {
   const router = useRouter();
   const [openSub, setOpenSub] = useState<boolean | undefined>(false);
 
@@ -77,6 +78,7 @@ function MenuItems({ item }: MenuItemsProps) {
               >
                 <Link
                   href={subItem.path}
+                  onClick={handleClose}
                   className="px-4 py-2 text-sm inline-flex w-full pl-9 justify-start items-center cursor-pointer"
                   style={isSelectedSubTab(subItem.path)}
                 >
@@ -98,6 +100,7 @@ function MenuItems({ item }: MenuItemsProps) {
             style={isSelectedMainTab(item.path ? item.path : "")}
             onClick={() => {
               setOpenSub(false);
+              handleClose();
             }}
           >
             {item.icon} <div className="ml-2 w-fit">{item.name}</div>

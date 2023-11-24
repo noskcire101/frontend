@@ -36,7 +36,7 @@ function SideMenu({ isToggle, handleClose, position }: Props) {
           <MdClose size={30} className="cursor-pointer" onClick={handleClose} />
         </div>
         {menuItems.map((item: IMenuItems) => (
-          <MenuItems key={item.name} item={item} />
+          <MenuItems key={item.name} handleClose={handleClose} item={item} />
         ))}
       </motion.div>
     </>

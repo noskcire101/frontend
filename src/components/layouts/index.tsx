@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import * as Styled from "./styled";
 import SideMenu from "./sidemenu";
 import { TiThMenu } from "react-icons/ti";
 import useToggleBooleanState from "@/hooks/common/useToggleBooleanState";
@@ -8,7 +7,7 @@ interface Props {
   sideNavPosition?: string;
   children: ReactElement;
 }
-export function Layout({ children, sideNavPosition = "right" }: Props) {
+export function Layout({ children, sideNavPosition = "left" }: Props) {
   const {
     booleanState: isToggle,
     setBooleanTrue: handleOpen,
@@ -16,7 +15,7 @@ export function Layout({ children, sideNavPosition = "right" }: Props) {
   } = useToggleBooleanState();
   return (
     <>
-      <Styled.HeaderNav>
+      <nav className="p-6 text-white bg-[#333]">
         <TiThMenu
           size={30}
           className={`${
@@ -25,16 +24,16 @@ export function Layout({ children, sideNavPosition = "right" }: Props) {
           onClick={handleOpen}
         />
         NavBar
-      </Styled.HeaderNav>
-      <Styled.ContentWrapper>
+      </nav>
+      <div className="primary-bg-color">
         <SideMenu
           isToggle={isToggle}
           position={sideNavPosition}
           handleClose={handleClose}
         />
-        <Styled.Main>{children}</Styled.Main>
-      </Styled.ContentWrapper>
-      <Styled.Footer>Footer</Styled.Footer>
+        <main>{children}</main>
+      </div>
+      <footer className="p-6 text-white bg-[#333]">Footer</footer>
     </>
   );
 }
