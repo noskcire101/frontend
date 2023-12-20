@@ -1,10 +1,10 @@
-import { IMenuItems, ISubMenuItems } from "@/models/layouts.ts";
+import { IMenuItems, ISubMenuItems } from "@/models/layouts";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  sideMenuVariants,
+  sideMainMenuVariants,
   sideSubMenuVariants,
 } from "@/constants/framer-motion/sidebar";
 
@@ -16,12 +16,13 @@ interface MenuItemsProps {
 function MenuItems({ item, handleClose }: MenuItemsProps) {
   const router = useRouter();
   const [openSub, setOpenSub] = useState<boolean | undefined>(false);
+  const [selectedMain, setselectedMain] = useState<boolean | undefined>(false);
 
   const isOpenTab = useMemo(
     () => ({
-      backgroundColor: openSub ? "#292929" : "",
+      backgroundColor: selectedMain || openSub ? "#292929" : "",
     }),
-    [openSub]
+    [selectedMain, openSub]
   );
   const isSelectedMainTab = useCallback(
     (subItemPath: string) => ({
@@ -49,7 +50,7 @@ function MenuItems({ item, handleClose }: MenuItemsProps) {
         (subItem) => subItem.path.split("/")[1] == router.asPath.split("/")[1]
       );
     };
-    return setOpenSub(shouldOpenSubTab());
+    return setOpenSub(shouldOpenSubTab()), setselectedMain(shouldOpenSubTab());
   }, [item.submenu, router.asPath]);
 
   return (
@@ -57,7 +58,7 @@ function MenuItems({ item, handleClose }: MenuItemsProps) {
       {item.submenu ? (
         <div style={isOpenTab}>
           <motion.div
-            variants={sideMenuVariants}
+            variants={sideMainMenuVariants}
             whileHover="sizeIncrease"
             className="px-4 py-2 text-lg inline-flex w-full justify-start items-center cursor-pointer"
             key={item.name}
@@ -91,7 +92,7 @@ function MenuItems({ item, handleClose }: MenuItemsProps) {
       ) : (
         <motion.div
           key={item.name}
-          variants={sideMenuVariants}
+          variants={sideMainMenuVariants}
           whileHover="sizeIncrease"
         >
           <Link

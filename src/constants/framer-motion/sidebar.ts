@@ -1,6 +1,7 @@
 const hoverColor = "#303030";
 
-export const sideMenuVariants = {
+
+export const sideMainMenuVariants = {
   sizeIncrease: {
     scale: 1.1,
     originX: 0,
@@ -14,6 +15,8 @@ export const sideSubMenuVariants = {
   open: {
     opacity: 1,
     height: "auto",
+    scale: 1,
+    filter: "blur(0px)",
     transition: {
       duration: 0.2,
     },
@@ -21,8 +24,12 @@ export const sideSubMenuVariants = {
   closed: {
     opacity: 0,
     height: 0,
+    scale: 0.3,
+    filter: "blur(20px)",
     transition: {
       duration: 0.2,
+      type: "tween",
+      ease: "easeIn",
     },
   },
   sizeIncrease: {
@@ -40,7 +47,9 @@ export const menuPositionLeftVariants = {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 0.5,
+      duration: 1,
+      type: "tween",
+      ease: "easeOut",
     },
   },
   closed: {
@@ -48,6 +57,7 @@ export const menuPositionLeftVariants = {
     opacity: 0,
     transition: {
       duration: 1,
+      ease: "easeIn",
     },
   },
   initial: {
