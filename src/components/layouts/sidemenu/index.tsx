@@ -1,5 +1,5 @@
 import useMenuItems from "./controller/useMenuItems";
-import { IMenuItems } from "@/models/layouts.ts";
+import { IMenuItems } from "@/models/layouts";
 import MenuItems from "./menuItems";
 import { motion } from "framer-motion";
 import { MdClose } from "react-icons/md";

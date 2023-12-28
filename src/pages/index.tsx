@@ -1,12 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import Homepage from "@/components/routes/home";
-import { useTheme } from "next-themes";
-import { useEffect } from "react";
 import MainAnimatedFrame from "@/hooks/framer-motion/mainAnimatedFrame";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (

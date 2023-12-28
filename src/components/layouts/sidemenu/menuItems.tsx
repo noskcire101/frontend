@@ -15,16 +15,18 @@ interface MenuItemsProps {
 
 function MenuItems({ item, handleClose }: MenuItemsProps) {
   const router = useRouter();
-  const [openSub, setOpenSub] = useState<boolean | undefined>(false);
-  const [selectedMain, setselectedMain] = useState<boolean | undefined>(false);
-
-  const isOpenTab = useMemo(
-    () => ({
-      backgroundColor: selectedMain || openSub ? "#292929" : "",
-    }),
-    [selectedMain, openSub]
+  const [openSubMenu, setOpenSubMenu] = useState<boolean | undefined>(false);
+  const [activeMainMenu, setActiveMainMenu] = useState<boolean | undefined>(
+    false
   );
-  const isSelectedMainTab = useCallback(
+
+  const isOpenMainMenu = useMemo(
+    () => ({
+      backgroundColor: activeMainMenu || openSubMenu ? "#292929" : "",
+    }),
+    [activeMainMenu, openSubMenu]
+  );
+  const isActiveMainMenuTab = useCallback(
     (subItemPath: string) => ({
       backgroundColor:
         subItemPath.split("/")[1] === router.asPath.split("/")[1]
@@ -33,7 +35,7 @@ function MenuItems({ item, handleClose }: MenuItemsProps) {
     }),
     [router.asPath]
   );
-  const isSelectedSubTab = useCallback(
+  const isActiveSubMenu = useCallback(
     (subItemPath: string) => ({
       backgroundColor:
         subItemPath.split("/")[1] === router.asPath.split("/")[1] &&
@@ -45,30 +47,33 @@ function MenuItems({ item, handleClose }: MenuItemsProps) {
   );
 
   useEffect(() => {
-    const shouldOpenSubTab = (): boolean | undefined => {
+    const shouldOpenSubMenu = (): boolean | undefined => {
       return item.submenu?.some(
         (subItem) => subItem.path.split("/")[1] == router.asPath.split("/")[1]
       );
     };
-    return setOpenSub(shouldOpenSubTab()), setselectedMain(shouldOpenSubTab());
+    return (
+      setOpenSubMenu(shouldOpenSubMenu()),
+      setActiveMainMenu(shouldOpenSubMenu())
+    );
   }, [item.submenu, router.asPath]);
 
   return (
     <>
       {item.submenu ? (
-        <div style={isOpenTab}>
+        <div style={isOpenMainMenu}>
           <motion.div
             variants={sideMainMenuVariants}
             whileHover="sizeIncrease"
             className="px-4 py-2 text-lg inline-flex w-full justify-start items-center cursor-pointer"
             key={item.name}
             onClick={() => {
-              setOpenSub((prev) => !prev);
+              setOpenSubMenu((prev) => !prev);
             }}
           >
             {item.icon} <div className="ml-2 w-fit">{item.name}</div>
           </motion.div>
-          {openSub &&
+          {openSubMenu &&
             item.submenu.map((subItem: ISubMenuItems) => (
               <motion.div
                 key={`${item.name}-${subItem.name}`}
@@ -81,7 +86,7 @@ function MenuItems({ item, handleClose }: MenuItemsProps) {
                   href={subItem.path}
                   onClick={handleClose}
                   className="px-4 py-2 text-sm inline-flex w-full pl-9 justify-start items-center cursor-pointer"
-                  style={isSelectedSubTab(subItem.path)}
+                  style={isActiveSubMenu(subItem.path)}
                 >
                   {subItem?.icon}{" "}
                   <div className="ml-2 w-fit">{subItem.name}</div>
@@ -98,9 +103,9 @@ function MenuItems({ item, handleClose }: MenuItemsProps) {
           <Link
             href={item.path ? item.path : "#"}
             className="px-4 py-2 text-lg inline-flex w-full justify-start items-center "
-            style={isSelectedMainTab(item.path ? item.path : "")}
+            style={isActiveMainMenuTab(item.path ? item.path : "")}
             onClick={() => {
-              setOpenSub(false);
+              setOpenSubMenu(false);
               handleClose();
             }}
           >
